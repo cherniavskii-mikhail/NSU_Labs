@@ -1,21 +1,29 @@
 #include<stdio.h>
+#include<math.h>
 
 int main()
 {
-	int number = 0;
-	int back_number[5];
-	int shift = 10;
+	int n = 0, x = 0;
+	int rez = 1;
+	int factorial = 1;
 
-	scanf_s("%d", &number);
+	scanf_s("%d %d", &x, &n);
 
-	for (int i = 0; i < 5; i++)
+	for (int i = 1; i <= n; i++)
 	{
-		back_number[i] = number % shift;
-		number /= 10;
+		if (i % 2 == 0)
+		{
+			factorial *= i;
+			rez += pow(x, i) / factorial;
+		}
+		else
+		{
+			factorial *= i;
+			rez -= pow(x, i) / factorial;
+		}
 	}
 
-	for (int i = 0; i < 5; i++)
-		printf("%d", back_number[i]);
+	printf("%d", rez);
 
 	return 0;
 }
