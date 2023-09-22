@@ -32,6 +32,7 @@ int main()
 
     printf("%d", count);
 
+    free(numbers);
     return 0;
 }
 
