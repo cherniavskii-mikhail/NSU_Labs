@@ -62,5 +62,8 @@ int main()
         area = trngl_area(x, y, n);
 
     printf("%d", area);
+
+    free(x);
+    free(y);
     return 0;
 }
