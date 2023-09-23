@@ -1,34 +1,29 @@
 #include <stdio.h>
 
-int check_number(int number)
-{
-    int check_flag = 0;
-    for (int i = 2; i <= number / 2; i++)
-    {
-        if (number % i == 0)
-            check_flag++;
-    }
-
-    if (check_flag != 0)
-        return 1;
+int check_number(int number1, int number2) {
+    if (number2 <= 1)
+        return 0;
     else
-        return -1;
-
+        if (number1 % number2 != 0)
+            return check_number(number1, number2 - 1);
+        else
+            return 1;
 }
 
-int main()
+
+int main() 
 {
-    int number;
-    int check_flag = 0;
+    int n = 0, check_flag = 0;
 
-    scanf_s("%d", &number);
+    scanf_s("%d", &n);
 
-    check_flag = check_number(number);
+    check_flag = check_number(n, n - 1);
 
     if (check_flag == 1)
         printf("It isn't simple number!!!");
-    else if (check_flag == -1)
+    else if (check_flag == 0)
         printf("It is simple number!!!");
 
     return 0;
+
 }
