@@ -1,5 +1,28 @@
 #include <stdio.h>
 #include <malloc.h>
+#include <math.h>
+
+
+int side_lengh(int x1, int x2, int y1, int y2)
+{
+    int lengh = sqrt(pow(x2 - x1, 2) + pow(y2 - y1, 2));
+    return lengh;
+}
+
+int trngl_area(int* x, int* y, int n)
+{
+    int a = 0, b = 0, c = 0, area = 0, p = 0;
+    
+    a = side_lengh(*x, *(x + 1), *y, *(y + 1));
+    b = side_lengh(*(x + 1), *(x + 2), *(y + 1), *(y + 2));
+    c = side_lengh(*(x + 2), *x, *(y + 2), *y);
+
+    p = (a + b + c) / 2;
+
+    area = sqrt(p * (p - a) * (p - b) * (p - c));
+
+    return area;
+}
 
 int figure_area(int* x, int* y, int n)
 {
@@ -33,8 +56,11 @@ int main()
         scanf_s("%d", y + i);
     }
         
-    area = figure_area(x, y, n);
-   
+    if (n > 3)
+        area = figure_area(x, y, n);
+    else
+        area = trngl_area(x, y, n);
+
     printf("%d", area);
     return 0;
 }
