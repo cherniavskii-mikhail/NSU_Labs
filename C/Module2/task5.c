@@ -43,7 +43,9 @@ int main()
 {
     int* x = 0;
     int* y = 0;
+    
     int n = 0, area = 0;
+    
     scanf_s("%d", &n);
 
     x = (int*)malloc(n * sizeof(int));
