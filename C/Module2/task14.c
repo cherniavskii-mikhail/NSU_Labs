@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <malloc.h>
-#include <math.h>
 
 void buff_fill(int** buff, int len)
 {
