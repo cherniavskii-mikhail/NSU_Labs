@@ -11,7 +11,7 @@ void zap(int* numbers, int n)
 
 int main()
 {
-    int* numbers = 0, n;
+    int *numbers, n;
 
     scanf_s("%d", &n);
     numbers = (int*)malloc(n * sizeof(int));
@@ -21,7 +21,8 @@ int main()
     for (int i = 0; i < n; i++)
         printf("%d\n", *(numbers + i));
 
+    free(number);
     return 0;
 }
 
-Есть вероятность что числа повторятся
+
