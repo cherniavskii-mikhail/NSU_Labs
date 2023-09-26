@@ -4,9 +4,7 @@
 void zap(int* numbers, int n)
 {
     for (int i = 0; i < n; i++) 
-    {
         *(numbers + i) = rand();
-    }
 }
 
 int main()
