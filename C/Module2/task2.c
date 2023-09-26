@@ -1,12 +1,15 @@
 #include <stdio.h>
 #include <malloc.h>
 
-int NOD(int a, int b) {
-    if (a != 0 && b != 0) {
+int NOD(int a, int b) 
+{
+    if (a != 0 && b != 0) 
+    {
         if (a > b)
             a = a % b;
         else
             b = b % a;
+        
         NOD(a, b);
     }
     else
