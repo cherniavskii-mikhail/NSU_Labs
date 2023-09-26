@@ -22,7 +22,6 @@ void buff_fill(int** buff, int len)
     
     if (len % 2 == 1)
         buff[len / 2][len / 2] = num;
-
 }
 
 int main()
