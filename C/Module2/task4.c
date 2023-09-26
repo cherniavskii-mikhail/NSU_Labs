@@ -26,7 +26,7 @@ int numbers_lengh(int* numbers, int n)
 
 int main()
 {
-    int* numbers = 0, n = 0, len = 0;
+    int *numbers, n = 0, len = 0;
 
     scanf_s("%d", &n);
     numbers = (int*)malloc(n * sizeof(int));
@@ -37,5 +37,7 @@ int main()
     len = numbers_lengh(numbers, n);
 
     printf("%d", len);
+
+    free(numbers);
     return 0;
 }
