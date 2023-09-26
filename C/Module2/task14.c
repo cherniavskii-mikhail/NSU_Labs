@@ -19,6 +19,7 @@ void buff_fill(int** buff, int len)
         for (int i = len - layer - 2; i > layer; i--)
             buff[i][layer] = num++;
     }
+    
     if (len % 2 == 1)
         buff[len / 2][len / 2] = num;
 
