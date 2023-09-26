@@ -41,9 +41,8 @@ int figure_area(int* x, int* y, int n)
 
 int main()
 {
-    int* x = 0;
-    int* y = 0;
-    
+    int* x;
+    int* y;
     int n = 0, area = 0;
     
     scanf_s("%d", &n);
