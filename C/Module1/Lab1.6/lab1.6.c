@@ -13,6 +13,7 @@ int main()
 
     // Вычисляем разницу между углами
     float angleDiff = hourAngle - minuteAngle;
+    
     if (angleDiff < 0)
     {
         angleDiff = -angleDiff;
