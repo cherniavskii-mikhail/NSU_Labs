@@ -48,7 +48,7 @@ bool symb_check(char c, char* str2, char* str3, int max_lh)
 
 int main()
 {
-    char str1[80], str2[80], str3[80], rez[80], c = ' ';
+    char str1[80], str2[80], str3[80], rez[80];
     int str_lh = 0, max_lh = 0, j = 0;
     bool flag = false;
 
