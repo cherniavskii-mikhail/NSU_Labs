@@ -17,4 +17,5 @@ int main()
     }
 
     printf("%d", shift_numb);
-    re
+    return 0;
+}
