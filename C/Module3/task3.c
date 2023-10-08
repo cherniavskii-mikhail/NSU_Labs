@@ -14,7 +14,7 @@ int symb_comp(char c, char* str, int i)
 
 int main()
 {
-    char str[10], c = ' ';
+    char str[80], c = ' ';
     int str_lh = 0, symb_numb = 1, flag = 0;
 
     gets(str);
