@@ -15,7 +15,7 @@ int char_to_dig(char a){ //translate char to digital
 	return x;
 }
 
-double trans_nfract_in_10(char* symb, int frst_not, int symbols){ // translate non fract in 10
+double trans_nfract(char* symb, int frst_not, int symbols){ // translate non fract in 10
 	int f = 0, t = 0;
 
 	if (frst_not != 10){
@@ -28,7 +28,7 @@ double trans_nfract_in_10(char* symb, int frst_not, int symbols){ // translate n
 	return f;
 }
 
-double trans_fract_in_10(char* a, int frst_not, int symbols, int pocle_drob) // translate non fract in 10
+double trans_fract(char* a, int frst_not, int symbols, int pocle_drob) // translate non fract in 10
 {
 	double f = 0, t = -(pocle_drob);
 
@@ -145,9 +145,9 @@ int main()
 
     if (frst_not != 10){
         if (drob)
-            number = trans_fract_in_10(symb, frst_not, symbols, after_dot);
+            number = trans_fract(symb, frst_not, symbols, after_dot);
         else
-            number = trans_nfract_in_10(symb, frst_not, symbols);
+            number = trans_nfract(symb, frst_not, symbols);
     }
     else {
         int shift = pow(10, after_dot);
