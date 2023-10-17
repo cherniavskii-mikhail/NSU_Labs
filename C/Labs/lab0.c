@@ -79,7 +79,7 @@ int main()
     bool end = false;
 
     for (int i = 0; i < 13; i++)
-        symb[i] = '0';
+        symb[i] = ' ';
 
     //Data enter
     printf("Enter your number:");
