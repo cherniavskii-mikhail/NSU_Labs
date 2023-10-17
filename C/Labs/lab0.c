@@ -3,7 +3,7 @@
 #include <math.h>
 #include <stdbool.h> 
 
-int char_to_dig(char a){
+int char_to_dig(char a){ //translate char to digital
 	int x = 0;
 
 	if ((a >= 'A') && (a <= 'Z'))
@@ -15,7 +15,7 @@ int char_to_dig(char a){
 	return x;
 }
 
-double trans_nfract_in_10(char* symb, int frst_not, int symbols){
+double trans_nfract_in_10(char* symb, int frst_not, int symbols){ // translate non fract in 10
 	int f = 0, t = 0;
 
 	if (frst_not != 10){
@@ -28,7 +28,7 @@ double trans_nfract_in_10(char* symb, int frst_not, int symbols){
 	return f;
 }
 
-double trans_fract_in_10(char* a, int frst_not, int symbols, int pocle_drob)
+double trans_fract_in_10(char* a, int frst_not, int symbols, int pocle_drob) // translate non fract in 10
 {
 	double f = 0, t = -(pocle_drob);
 
@@ -52,15 +52,14 @@ double int_part_mult(double number, int sec_not){
 	return (int)operate_rez;
 }
 
-char dig_to_char(int operate_rez){
+char dig_to_char(int operate_rez){ // translate char to digital
 	char b;
 
 	if (operate_rez >= 10)
 		b = 'A' + operate_rez - 10;
 	else
 		b = '0' + operate_rez;
-
-
+	
 	return b;
 }
 
@@ -80,7 +79,7 @@ int main()
     bool end = false;
 
     for (int i = 0; i < 13; i++)
-        symb[i] = ' ';
+        symb[i] = '0';
 
     //Data enter
     printf("Enter your number:");
@@ -91,6 +90,10 @@ int main()
 
     printf("Enter the second notation: ");
     scanf_s("%d", &sec_not);
+
+
+   // scanf_s("%d %d", &frst_not, &sec_not);
+    //fgets(symb, 13, stdin);
 
     char* pa = symb;
 
@@ -109,7 +112,7 @@ int main()
     }
 
     int after_dot = 0;
-    int h = 0; // найти номер точк
+    int dot_pos = 0; // dot position
 
 
     while (*pa != NULL){
@@ -119,12 +122,12 @@ int main()
             return 0;
         }
 
-        h += 1; // dot position
+        dot_pos += 1;
 
         // check for dot
         if (*pa == '.'){
             drob += 1;
-            after_dot = symbols - h; //number of symbols after dot
+            after_dot = symbols - dot_pos; //number of symbols after dot
         }
 
         ++pa;
@@ -134,8 +137,7 @@ int main()
         symbols--;
 
     if (frst_not == sec_not){
-        printf("It is the same number!");
-
+        printf("The same number!!");
         return 0;
     }
 
@@ -161,18 +163,18 @@ int main()
         for (int i = symbols; i > symbols - after_dot; i--) {
             numb = char_to_dig(symb[i]);
             number += (numb / shift);
+		
             shift /= 10;
-
         }
     }
 
     if (sec_not == 10){
         printf("%lf", number);
+	    
         return 0;
     }
 
-    int operate_rez = 0;
-    int char_numb = 0;
+    int operate_rez = 0, char_numb = 0;
     char final_number[100];
     int int_part = (int)number;
 
@@ -206,7 +208,6 @@ int main()
         }
         else{
             final_number[char_numb] = '0';
-            break;
         }
     }
 
