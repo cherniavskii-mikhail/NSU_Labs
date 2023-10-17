@@ -44,7 +44,7 @@ double trans_fract_in_10(char* a, int frst_not, int symbols, int pocle_drob) // 
 	return f;
 }
 
-double int_part_mult(double number, int sec_not){
+double int_part_mult(double number, int sec_not){ 
 	double operate_rez;
 
     operate_rez = number * sec_not;
