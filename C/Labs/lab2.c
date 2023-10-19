@@ -1,36 +1,52 @@
 #include <stdio.h>
+#include <stdbool.h>
 
-int max_index(int* text, int text_lenght)
+bool check_text(char* text, int text_lenght){
+    for (int i = 0; i < text_lenght; i++)
+        for (int j = 0; j < text_lenght; j++)
+            if(i != j)
+                if (text[i] == text[j])
+                    return false;
+
+    return true;
+}
+
+int char_to_dig(char a){ //translate char to digital
+    int x = 0;
+
+    if ((a >= '0') && (a <= '9'))
+        x = a - '0';
+
+    return x;
+}
+
+int max_index(char* text, int text_lenght)
 {
 	for (int i = (text_lenght - 1) - 1; i >= 0; i--)
 	{
-		if (text[i] < text[i + 1])
+		if (char_to_dig(text[i]) < char_to_dig(text[i + 1]))
 			return i;
 	}
 
 	return -1;
 }
 
-int bigger_index(int* text,int swap_index1, int text_lenght)
+int bigger_index(char* text,int swap_index1, int text_lenght)
 {
 	for (int i = text_lenght - 1; i >= 0; i--)
-	{
-		if (text[swap_index1] < text[i])
-		{
+		if (char_to_dig(text[swap_index1]) < char_to_dig(text[i]))
 			return i;
-		}
-	}
 
 	return -1;
 }
 
-void swap(int* text,int swap_index1, int j_index, int text_lenght)
+void swap(char* text,int swap_index1, int swap_index2, int text_lenght)
 {
 	int t = 0;
 
 	t = text[swap_index1];
-	text[swap_index1] = text[j_index];
-	text[j_index] = t;
+	text[swap_index1] = text[swap_index2];
+	text[swap_index2] = t;
 
 	for (int i = swap_index1 + 1, j = text_lenght - 1; i < j; i++, j--)
 	{
@@ -40,31 +56,40 @@ void swap(int* text,int swap_index1, int j_index, int text_lenght)
 	}
 
 	for (int i = 0; i < text_lenght; i++)
-		printf("%d", text[i]);
+		printf("%c", text[i]);
 		
 	printf("%c", '\n');
 }
 
 int main()
 {
-	int text[16] = { 0, 1, 2, 3, 4 };
-	int number = 0;
+	char text[16];
+	int number = 0, text_lenght = 0, i = 0;
+    bool check = true;
 
+    fgets(text, 16, stdin);
     scanf_s("%d", &number);
 
 	int swap_index1 = 0, swap_index2 = 0;
 
-	int text_lenght = 5;
+	while (text[i] != '\n') {
+        text_lenght++;
+        i++;
+    }
 
-	while (number > 0){
-		swap_index1 = max_index(text, text_lenght);
+    check = check_text(text, text_lenght);
+    if(check)
+	    while (number > 0){
+		    swap_index1 = max_index(text, text_lenght);
 
-		swap_index2 = bigger_index(text, swap_index1, text_lenght);
+		    swap_index2 = bigger_index(text, swap_index1, text_lenght);
 
-		swap(text, swap_index1, swap_index2, text_lenght);
+		    swap(text, swap_index1, swap_index2, text_lenght);
 
-		number--;
-	}
+		    number--;
+	    }
+    else
+        printf("Bad input");
 
 	return 0;
 }
