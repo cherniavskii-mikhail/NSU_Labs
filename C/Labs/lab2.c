@@ -57,8 +57,7 @@ void swap(char* text,int swap_index1, int swap_index2, int text_lenght)
 
 	for (int i = 0; i < text_lenght; i++)
 		printf("%c", text[i]);
-		
-	printf("%c", '\n');
+
 }
 
 int main()
@@ -87,6 +86,9 @@ int main()
 		    swap(text, swap_index1, swap_index2, text_lenght);
 
 		    number--;
+
+            if (number != 0)
+                printf("%c", '\n');
 	    }
     else
         printf("Bad input");
