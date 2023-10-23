@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdbool.h>
+#include <string.h>
 
 /* necessary to check the text for errors */
 bool check_text(char* text, int text_len){
@@ -71,17 +72,14 @@ void swap(char* text,int swap_i1, int swap_index2, int text_len){
 
 int main()
 {
-    char text[10];
+    char* text;
     int number = 0, text_len = 0, swap_i1 = 0, swap_i2 = 0, i = 0;
     bool check = true;
 
-    fgets(text, 16, stdin);
+    gets(text);
     scanf_s("%d", &number);
 
-    while (text[i] != '\n') {
-        text_len++;
-        i++;
-    }
+    text_len = strlen(text);
 
     check = check_text(text, text_len);
 
