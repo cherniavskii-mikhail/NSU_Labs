@@ -1,57 +1,54 @@
 #include<stdio.h>
 #include<string.h>
 
-void shift_table(int* shift, char sample[], int sample_lenght)
-{
+/*need to make a buffer which show, how many symbols can we skip*/
+void shift_table(int* shift, char sample[], int sam_len){
     for (int i = 0; i < 256; i++)
-        shift[i] = sample_lenght;
+        shift[i] = sam_len;
 
-    for (int i = 0; i < sample_lenght - 1; i++)
+    for (int i = 0; i < sam_len - 1; i++)
     {
         int kod = (unsigned char)sample[i];
-        shift[kod] = sample_lenght - 1 - i;
+        shift[kod] = sam_len - 1 - i;
     }
-
 }
 
-int search_the_word(int sample_lenght, char sample[], char text[])
-{
+/*need to find word in the text*/
+int search_word(int sam_len, char sample[], char text[]){
     int shift[256];
-    shift_table(shift, sample, sample_lenght);
+    shift_table(shift, sample, sam_len);
 
-    int text_lenght = strlen(text) - 1; //because of \n
-    int position_in_sample = sample_lenght - 1, position_in_text = position_in_sample;
+    int text_len = strlen(text) - 1; //because of \n
+    int sample_pos = sam_len - 1, text_pos = sample_pos;
 
     int checked_symbols[50];
     for (int i = 0; i < 50; i++)
         checked_symbols[i] = 0;
 
-    for (int i = 0; i < text_lenght - sample_lenght; i++)
+    for (int i = 0; i < text_len - sam_len; i++)
     {
-        if (sample[position_in_sample] == text[position_in_text])
+        if (sample[sample_pos] == text[text_pos])
         {
-            checked_symbols[i] = position_in_text + 1;
+            checked_symbols[i] = text_pos + 1;
 
-            if (position_in_sample == 0)
+            if (sample_pos == 0)
             {
                 for (int i = 0; i < 50; i++)
-                {
                     if (checked_symbols[i] != 0)
                         printf("%d", checked_symbols[i]);
-                }
 
                 return 0;
             }
-            position_in_sample--;
-            position_in_text--;
+            sample_pos--;
+            text_pos--;
         }
         else
         {
-            checked_symbols[i] = position_in_text + 1;
+            checked_symbols[i] = text_pos + 1;
 
-            int kod = (unsigned char)text[position_in_text];
-            position_in_text += (shift[kod] + (sample_lenght - position_in_sample - 1));
-            position_in_sample = sample_lenght - 1;
+            int kod = (unsigned char)text[text_pos];
+            text_pos += (shift[kod] + (sam_len - sample_pos - 1));
+            sample_pos = sam_len - 1;
         }
     }
 
@@ -60,7 +57,6 @@ int search_the_word(int sample_lenght, char sample[], char text[])
             printf("%d", checked_symbols[i]);
 
     return 0;
-
 }
 
 int main()
@@ -78,15 +74,13 @@ int main()
     printf("Enter the text: ");
 
     for (int i = 0; i < 16; i++)
-    {
         text[i] = ' ';
-    }
+
 
     fgets(text, 50, stdin);
 
-    int sample_lenght = strlen(sample) - 1; //becouse of \n
-
-    search_the_word(sample_lenght, sample, text);
+    int sam_len = strlen(sample) - 1;
+    search_word(sam_len, sample, text);
 
     return 0;
 }
