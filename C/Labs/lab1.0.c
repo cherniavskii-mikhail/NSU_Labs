@@ -1,10 +1,8 @@
 #include<stdio.h>
 #include<string.h>
 
-int search_the_word(int sample_lenght, char sample[], char text[])
+void shift_table(int* shift, char sample[], int sample_lenght)
 {
-    int shift[256];
-
     for (int i = 0; i < 256; i++)
         shift[i] = sample_lenght;
 
@@ -14,15 +12,19 @@ int search_the_word(int sample_lenght, char sample[], char text[])
         shift[kod] = sample_lenght - 1 - i;
     }
 
+}
+
+int search_the_word(int sample_lenght, char sample[], char text[])
+{
+    int shift[256];
+    shift_table(shift, sample, sample_lenght);
+
     int text_lenght = strlen(text) - 1; //because of \n
     int position_in_sample = sample_lenght - 1, position_in_text = position_in_sample;
 
     int checked_symbols[50];
-
     for (int i = 0; i < 50; i++)
-    {
         checked_symbols[i] = 0;
-    }
 
     for (int i = 0; i < text_lenght - sample_lenght; i++)
     {
