@@ -35,7 +35,7 @@ int search_word(int sam_len, char sample[], char text[]){
             {
                 for (int i = 0; i < 50; i++)
                     if (checked_symbols[i] != 0)
-                        printf("%d", checked_symbols[i]);
+                        printf("%d ", checked_symbols[i]);
 
                 return 0;
             }
@@ -54,7 +54,7 @@ int search_word(int sam_len, char sample[], char text[]){
 
     for (int i = 0; i < 50; i++)
         if (checked_symbols != 0)
-            printf("%d", checked_symbols[i]);
+            printf("%d ", checked_symbols[i]);
 
     return 0;
 }
