@@ -2,22 +2,23 @@
 #include<stdlib.h>
 #include<stdbool.h>
 #include <ctype.h>
+#include<string.h>
 
 struct List
 {
-    int value;
+    char value;
     struct List* next;
 };
 
-void push(struct List** head_ref, int new_key)
+void push(struct List** head_ref, char new_value)
 {
-    struct List* new_List = (struct List*)malloc(sizeof(struct List));
+    struct List* new_list = (struct List*)malloc(sizeof(struct List));
 
-    new_List->value = new_key;
+    new_list->value = new_value;
 
-    new_List->next = (*head_ref);
+    new_list->next = (*head_ref);
 
-    (*head_ref) = new_List;
+    (*head_ref) = new_list;
 }
 
 int count(struct List* head)
@@ -40,16 +41,18 @@ int main()
     // Start with the empty list 
     struct List* head = NULL;
 
-    int number = 0, c = 0;
-    bool flag = 0;
+    int c = 0;
+    char number = ' ';
+    bool dig = true;
 
-    scanf_s("%d", &number);
-    flag = isdigit(number);
-
-    while(isdigit(number))
+    while(dig)
     {
-        push(&head, number);
-        scanf_s("%d", &number);
+        scanf_s("%c", &number);
+
+        dig = isdigit(number);
+
+        if (dig)
+            push(&head, number);
     }
 
     c = count(head);
