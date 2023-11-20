@@ -10,15 +10,15 @@ struct List
     struct List* next;
 };
 
-void push(struct List** head_ref, char new_value)
+void push(struct List** head, char new_value)
 {
     struct List* new_list = (struct List*)malloc(sizeof(struct List));
 
     new_list->value = new_value;
 
-    new_list->next = (*head_ref);
+    new_list->next = (*head);
 
-    (*head_ref) = new_list;
+    (*head) = new_list;
 }
 
 int count(struct List* head)
@@ -45,7 +45,7 @@ int main()
     char number = ' ';
     bool dig = true;
 
-    while(dig)
+    while (dig)
     {
         scanf_s("%c", &number);
 
