@@ -8,20 +8,20 @@ struct List
     struct List* next;
 };
 
-void push(struct List** head_ref, int new_key)
+void push(struct List** head, int new_key)
 {
-    struct List* new_List = (struct List*)malloc(sizeof(struct List));
+    struct List* new_list = (struct List*)malloc(sizeof(struct List));
 
-    new_List->value = new_key;
+    new_list->value = new_key;
 
-    new_List->next = (*head_ref);
+    new_list->next = (*head);
 
-    (*head_ref) = new_List;
+    (*head) = new_list;
 }
 
 bool search(struct List* head, int x)
 {
-    
+
     struct List* current = head;
 
     while (current != NULL)
