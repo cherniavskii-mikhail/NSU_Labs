@@ -13,7 +13,7 @@ struct stack
     struct sist* next;
 };
 
-/* эта функция пихает операторы в стэк операторов*/
+/* эта функция кладёт операторы в стэк операторов*/
 void PushStack(struct stack* operator_stack, int symbol)
 {
     operator_stack->value = symbol;
