@@ -10,10 +10,10 @@
 struct stack
 {
     char value;
-    struct sist* next;
+    struct stack* next;
 };
 
-/* эта функция кладёт операторы в стэк операторов*/
+/* эта функция пихает операторы в стэк операторов*/
 void push_stack(struct stack* operator_stack, int symbol)
 {
     operator_stack->value = symbol;
@@ -52,7 +52,7 @@ int priority(char c)
         return 2;
     return -1;
 }
-int isOperator(char symbol)
+int is_operator(char symbol)
 {
     int check = 0;
 
@@ -67,9 +67,9 @@ int isOperator(char symbol)
     return check;
 }
 
-int proverka_simvolov(char symbol)
+int check_symb(char symbol)
 {
-    return isOperator(symbol) || isdigit(symbol) || symbol == '\n';
+    return is_operator(symbol) || isdigit(symbol) || symbol == '\n';
 }
 
 void postfix(char* str, int size, char* postf)
@@ -81,7 +81,7 @@ void postfix(char* str, int size, char* postf)
     {
         if (isdigit(str[i])) 
         {
-            while (!isOperator(str[i])) 
+            while (!is_operator(str[i])) 
             {
                 postf = str[i];
                 postfix_size++;
@@ -92,11 +92,11 @@ void postfix(char* str, int size, char* postf)
             postfix_size++;
             i--;
         }
-        if (isOperator(str[i]))
+        if (is_operator(str[i]))
         {
             if (str[i] == '(') 
             {
-                PushStack(&operator_stack, (int)str[i]); 
+                push_stack(&operator_stack, (int)str[i]); 
             }
             else if (str[i] == ')') 
             {
@@ -122,7 +122,7 @@ void postfix(char* str, int size, char* postf)
                     postf[postfix_size + 1] = ' ';
                     postfix_size += 2;
                 }
-                PushStack(&operator_stack, (int)str[i]); 
+                push_stack(&operator_stack, (int)str[i]); 
             }
         }
     }
@@ -146,7 +146,7 @@ int calculate(char* postf)
         if (isdigit(postf[i]))
         {
             int x = 0;
-            while (!isOperator(postf[i]) && postf[i] != ' ') {
+            while (!is_operator(postf[i]) && postf[i] != ' ') {
                 x *= 10;
                 x += (int)(postf[i] - '0');
                 i++;
@@ -154,11 +154,11 @@ int calculate(char* postf)
                     break;
                 }
             }
-            PushStack(&resultat_stack, x);
+            push_stack(&resultat_stack, x);
             i--;
         }
 
-        else if (isOperator(postf[i])) {
+        else if (is_operator(postf[i])) {
             int a = pop_stack(&resultat_stack);
             int b = pop_stack(&resultat_stack);
             if (postf[i] == '+') {
@@ -177,7 +177,7 @@ int calculate(char* postf)
                 }
                 resultat = b / a;
             }
-            PushStack(&resultat_stack, resultat);
+            push_stack(&resultat_stack, resultat);
         }
     }
     return peek_stack(&resultat_stack);
@@ -197,7 +197,7 @@ int main(void)
 
     while (i < (ammount - 1))
     {
-        if (!proverka_simvolov(str[i]))
+        if (!check_symb(str[i]))
         {
             printf("syntax error");  
             return 0;
