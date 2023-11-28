@@ -14,14 +14,14 @@ struct stack
 };
 
 /* эта функция кладёт операторы в стэк операторов*/
-void PushStack(struct stack* operator_stack, int symbol)
+void push_stack(struct stack* operator_stack, int symbol)
 {
     operator_stack->value = symbol;
     operator_stack->next++;
 }
 
 /* эта функция вытаскивает оператор из стека операторов и уменьшает размер стэка*/
-int pop_stack(struct stack* operator_stack)
+int peep_stack(struct stack* operator_stack)
 {
     if (operator_stack->value == 0)
     {
