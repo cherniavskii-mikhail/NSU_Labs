@@ -193,7 +193,7 @@ int main(void)
     }
 
     int ammount = strlen(str);
-    unsigned int i = 0;
+    int i = 0;
 
     while (i < (ammount - 1))
     {
@@ -205,7 +205,7 @@ int main(void)
         i++;
     }
     str[i] = '\0';
-    char postf;
+    char postf[MAX_LENGTH];
     postfix(str, i, postf);
     printf("%d", calculate(postf));
     return 0;
