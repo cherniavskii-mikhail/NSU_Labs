@@ -76,13 +76,15 @@ void start_game(node* tree, int answer)
 
     scanf_s("%d", &answer);
 
-    if (answer == 1)
-        start_game(tree->left, answer);
-    else if (answer == 2)
-        start_game(tree->right, answer);
+    if (tree->question != NULL)
+        if (answer == 1)
+            start_game(tree->left, answer);
+        else
+            start_game(tree->right, answer);
     else
         return 0;
-
+    
+    
 }
 
 int main()
@@ -109,3 +111,4 @@ int main()
 
     return 0;
 }
+
