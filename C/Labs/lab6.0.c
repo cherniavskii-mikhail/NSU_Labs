@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include<malloc.h>
 
-typedef struct node // typedef is needed to create new type
+typedef struct node 
 {
     struct node* left; 
     struct node* right;
@@ -10,11 +10,11 @@ typedef struct node // typedef is needed to create new type
     int value;
 } node;
 
-node* make_node(int number_to_add, node** first_position)
+node* make_node(int add_numb, node** frst_pos)
 {
-    node* new_node = malloc(sizeof(node)); // get pointer to the next position (to create new node)
+    node* new_node = malloc(sizeof(node)); 
 
-    new_node -> value = number_to_add;
+    new_node -> value = add_numb;
     new_node -> left = NULL;
     new_node -> right = NULL;
     new_node -> height = 1;
@@ -88,23 +88,23 @@ node* tree_balance(node* tree)
     return tree;
 }
 
-node* add_node(node* tree, int number_to_add, node** first_position)
+node* add_node(node* tree, int add_numb, node** frst_pos)
 {
     if (tree == NULL)
-        return make_node(number_to_add, first_position);
+        return make_node(add_numb, frst_pos);
     else
     {
-        if (tree->value >= number_to_add)
+        if (tree->value >= add_numb)
         
             if (tree->left == NULL)
-                tree->left = make_node(number_to_add, first_position);
+                tree->left = make_node(add_numb, frst_pos);
             else
-                tree->left = add_node(tree->left, number_to_add, first_position);
+                tree->left = add_node(tree->left, add_numb, frst_pos);
         else
             if (tree->right == NULL)
-                tree->right = make_node(number_to_add, first_position);
+                tree->right = make_node(add_numb, frst_pos);
             else
-                tree->right = add_node(tree->right, number_to_add, first_position);
+                tree->right = add_node(tree->right, add_numb, frst_pos);
         
         return tree_balance(tree);
     }
@@ -112,22 +112,22 @@ node* add_node(node* tree, int number_to_add, node** first_position)
 
 int main()
 {
-    int numb_vertexes = 0;
-    int number_to_add = 0;
+    int numb_vrtx = 0;
+    int add_numb = 0;
 
     node* tree = NULL;
     
-    scanf_s("%d", &numb_vertexes);
+    scanf_s("%d", &numb_vrtx);
 
-    node* nodes_buffer = (node*)malloc(numb_vertexes * sizeof(node));
+    node* nodes_buffer = (node*)malloc(numb_vrtx * sizeof(node));
     node* m = nodes_buffer;
-    node** first_position = &m;
+    node** frst_pos = &m;
 
-    for (int i = 0; i < numb_vertexes; i++)
+    for (int i = 0; i < numb_vrtx; i++)
     {
-        scanf_s("%d", &number_to_add); 
+        scanf_s("%d", &add_numb); 
 
-        tree = add_node(tree, number_to_add, first_position);
+        tree = add_node(tree, add_numb, frst_pos);
     }
 
     printf("%d", tree_height(tree));
