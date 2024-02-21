@@ -62,6 +62,16 @@ node* rotate_right(node* tree)
     return rotated_tree;
 }
 
+void bg_leftrot(node* tree) {
+    rightrot(tree->right);
+    leftrot(tree);
+}
+
+void bg_rightrot(node* tree) {
+    leftrot(tree->left);
+    rightrot(tree);
+}
+
 node* tree_balance(node* tree)
 {
     height_fix(tree);
@@ -110,6 +120,31 @@ node* add_node(node* tree, int add_numb, node** frst_pos)
     }
 }
 
+void inorder(node* tree) {
+    if (tree) {
+        inorder(tree->left);
+        printf("%d ", tree->value);
+        inorder(tree->right);
+    }
+}
+
+
+void preorder(node* tree) {
+    if (tree) {
+        printf("%d ", tree->value);
+        preorder(tree->left);
+        preorder(tree->right);
+    }
+}
+
+void postorder(node* tree) {
+    if (tree) {
+        postorder(tree->left);
+        postorder(tree->right);
+        printf("%d ", tree->value);
+    }
+}
+
 int main()
 {
     int numb_vrtx = 0;
@@ -132,6 +167,10 @@ int main()
 
     printf("%d", tree_height(tree));
 	
+    inorder(tree);
+    preorder(tree);
+    postorder(tree);
+
     free(nodes_buffer);
 	return 0;
 }
