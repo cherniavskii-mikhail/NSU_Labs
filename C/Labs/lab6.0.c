@@ -21,7 +21,7 @@ node* make_node(int add_numb, node** frst_pos)
     return new_node;
 }
 
-int max(int frst_numb, int sec_numb)
+int max_numb(int frst_numb, int sec_numb)
 {
     if (frst_numb > sec_numb)
         return frst_numb;
@@ -33,7 +33,7 @@ int get_height(node* tree)
 {
     if (tree == NULL)
         return -1;
-    return max(get_height(tree->left), get_height(tree->right)) + 1;
+    return max_numb(get_height(tree->left), get_height(tree->right)) + 1;
 }
 
 node* rotate_left(node* tree)
