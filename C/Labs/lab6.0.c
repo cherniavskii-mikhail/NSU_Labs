@@ -1,12 +1,12 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
 #include<malloc.h>
+#include <stdbool.h>
 
 typedef struct node 
 {
     struct node* left; 
     struct node* right;
-    int height;
     int value;
 } node;
 
@@ -17,25 +17,23 @@ node* make_node(int add_numb, node** frst_pos)
     new_node -> value = add_numb;
     new_node -> left = NULL;
     new_node -> right = NULL;
-    new_node -> height = 1;
 
     return new_node;
 }
 
-int tree_height(node* tree)
+int max(int frst_numb, int sec_numb)
 {
-    return(tree == NULL) ? 0 : tree->height;
+    if (frst_numb > sec_numb)
+        return frst_numb;
+    return sec_numb;
 }
 
-void height_fix(node* tree)
-{
-    int left_height = tree_height(tree->left);
-    int right_height = tree_height(tree->right);
 
-    if (left_height > right_height)
-        tree->height = tree_height(tree->left) + 1;
-    else
-        tree->height = tree_height(tree->right) + 1;
+int get_height(node* tree)
+{
+    if (tree == NULL)
+        return -1;
+    return max(get_height(tree->left), get_height(tree->right)) + 1;
 }
 
 node* rotate_left(node* tree)
@@ -62,38 +60,21 @@ node* rotate_right(node* tree)
     return rotated_tree;
 }
 
-void bg_leftrot(node* tree) {
-    rightrot(tree->right);
-    leftrot(tree);
-}
-
-void bg_rightrot(node* tree) {
-    leftrot(tree->left);
-    rightrot(tree);
-}
-
 node* tree_balance(node* tree)
 {
-    height_fix(tree);
     
     node* right_tree = tree->right;
     node* left_tree = tree->left;
 
-    if (tree_height(tree->left) - tree_height(left_tree) == 2)
-    {
-        if (tree_height(right_tree->right) < tree_height(right_tree->left))
-            tree->right = rotate_right(right_tree);
+    if (right_tree->right < right_tree->left)
+        tree->right = rotate_right(right_tree);
 
-        return rotate_left(tree);
-    }
+    return rotate_left(tree);
 
-    if (tree_height(right_tree) - tree_height(left_tree) == -2)
-    {
-        if(tree_height(left_tree->right)> tree_height(left_tree->left))
-            tree->left = rotate_left(left_tree);
+    if(left_tree->right> left_tree->left)
+        tree->left = rotate_left(left_tree);
 
-        return rotate_right(tree);
-    }
+   return rotate_right(tree);
 
     return tree;
 }
@@ -128,10 +109,29 @@ void inorder(node* tree) {
     }
 }
 
+bool find_numb(node* tree, int fnd_numb)
+{
+    bool find = false;
+
+    while (!tree || !find)
+    {
+        if (tree->value == fnd_numb)
+            find = true;
+        else if (fnd_numb > tree->value)
+            tree = tree->right;
+        else
+            tree = tree->left;
+    }
+
+    return find;
+}
+
 int main()
 {
     int numb_vrtx = 0;
     int add_numb = 0;
+    int fnd_numb = 0;
+    bool find = false;
 
     node* tree = NULL;
     
@@ -148,10 +148,18 @@ int main()
         tree = add_node(tree, add_numb, frst_pos);
     }
 
-    printf("%d", tree_height(tree));
-	
     inorder(tree);
-   
+
+    scanf_s("%d", &fnd_numb);
+	
+    find = find_numb(tree, fnd_numb);
+
+    if (find == true)
+        printf("There is such number!");
+    else 
+        printf("There is not such number!");
+    
+    printf("%d\n", get_height(tree) + 1);
 
     free(nodes_buffer);
 	return 0;
