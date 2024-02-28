@@ -128,23 +128,6 @@ void inorder(node* tree) {
     }
 }
 
-
-void preorder(node* tree) {
-    if (tree) {
-        printf("%d ", tree->value);
-        preorder(tree->left);
-        preorder(tree->right);
-    }
-}
-
-void postorder(node* tree) {
-    if (tree) {
-        postorder(tree->left);
-        postorder(tree->right);
-        printf("%d ", tree->value);
-    }
-}
-
 int main()
 {
     int numb_vrtx = 0;
@@ -168,8 +151,7 @@ int main()
     printf("%d", tree_height(tree));
 	
     inorder(tree);
-    preorder(tree);
-    postorder(tree);
+   
 
     free(nodes_buffer);
 	return 0;
