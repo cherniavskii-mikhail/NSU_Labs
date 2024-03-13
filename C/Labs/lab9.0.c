@@ -6,21 +6,21 @@ typedef struct node
 {
     int vertex;
     int weight;
-    struct Node* next;
+    Node* next;
 } Node;
 
 
 typedef struct graph
 {
     int numb_vert;
-    struct node** adjlist;
+    Node** adjlist;
 } Graph;
 
 
 typedef struct visited
 {
-    int distance;
-    int processed;
+    int dist;
+    int proc;
     int parent;
 } Visited;
 
@@ -61,21 +61,21 @@ void add_edge(Graph* graph, int start, int end, int weight)
 }
 
 
-int extract_min(Node* priority_queue, Visited* vist_nodes)
+int extract_min(Node* prior_queue, Visited* vist_nodes)
 {
-    if (!priority_queue)
+    if (!prior_queue)
         return -1;
 
     int min_dist = INT_MAX;
     int min_vert = -1;
-    Node* cur = priority_queue;
+    Node* cur = prior_queue;
 
     while (cur)
     {
         int vertex = cur->vertex;
-        if (!vist_nodes[vertex].processed && vist_nodes[vertex].distance <= min_dist)
+        if (!vist_nodes[vertex]->proc && vist_nodes[vertex]->distance <= min_dist)
         {
-            min_dist = vist_nodes[vertex].distance;
+            min_dist = vist_nodes[vertex]->dist;
             min_vert = vertex;
         }
         cur = cur->next;
@@ -84,51 +84,51 @@ int extract_min(Node* priority_queue, Visited* vist_nodes)
 }
 
 
-void dijkstra(Graph* graph, int vert_start, int vert_end)
+void dejkstra(Graph* graph, int vert_start, int vert_end)
 {
     Visited* vist_nodes = (Visited*)malloc(graph->numb_vert * sizeof(Visited));
     for (int i = 0; i < graph->numb_vert; i++)
     {
-        vist_nodes[i].distance = INT_MAX;
-        vist_nodes[i].processed = 0;
-        vist_nodes[i].parent = -1;
+        vist_nodes[i]->dist = INT_MAX;
+        vist_nodes[i]->proc = 0;
+        vist_nodes[i]->parent = -1;
     }
 
-    vist_nodes[vert_start - 1].distance = 0;
-    Node* priority_queue = NULL;
+    vist_nodes[vert_start - 1].dist = 0;
+    Node* prior_queue = NULL;
 
     Node* new_node = (Node*)malloc(sizeof(Node));
     new_node->vertex = vert_start - 1;
     new_node->weight = 0;
     new_node->next = NULL;
-    priority_queue = new_node;
+    prior_queue = new_node;
 
-    while (priority_queue)
+    while (prior_queue)
     {
-        int min_edge = extract_min(priority_queue, vist_nodes);
+        int min_edge = extract_min(prior_queue, vist_nodes);
         if (min_edge == -1)
             break;
 
 
-        vist_nodes[min_edge].processed = 1;
+        vist_nodes[min_edge].proc = 1;
 
         Node* temp = graph->adjlist[min_edge];
 
         while (temp)
         {
             int adj_vert = temp->vertex - 1;
-            int alt = vist_nodes[min_edge].distance + temp->weight;
+            int alt = vist_nodes[min_edge]->dist + temp->weight;
 
-            if (alt <= vist_nodes[adj_vert].distance)
+            if (alt <= vist_nodes[adj_vert].dist)
             {
-                vist_nodes[adj_vert].distance = alt;
-                vist_nodes[adj_vert].parent = min_edge;
+                vist_nodes[adj_vert]->dist = alt;
+                vist_nodes[adj_vert]->parent = min_edge;
 
                 Node* new_node = (Node*)malloc(sizeof(Node));
                 new_node->vertex = adj_vert;
                 new_node->weight = alt;
-                new_node->next = priority_queue;
-                priority_queue = new_node;
+                new_node->next = prior_queue;
+                prior_queue = new_node;
             }
             temp = temp->next;
         }
@@ -141,17 +141,17 @@ void dijkstra(Graph* graph, int vert_start, int vert_end)
     while (cur != -1)
     {
         path[path_len++] = cur + 1;
-        cur = vist_nodes[cur].parent;
+        cur = vist_nodes[cur]->parent;
     }
 
     for (int i = 0; i < graph->numb_vert; i++)
     {
-        if (vist_nodes[i].distance == INT_MAX)
+        if (vist_nodes[i]->dist == INT_MAX)
             printf("oo ");
-        else if (vist_nodes[i].distance > INT_MAX)
+        else if (vist_nodes[i]->dist > INT_MAX)
             printf("INT_MAX+ ");
         else
-            printf("%lld ", vist_nodes[i].distance - vist_nodes[vert_start - 1].distance);
+            printf("%lld ", vist_nodes[i]->dist - vist_nodes[vert_start - 1]->dist);
     }
     printf("\n");
 
@@ -162,8 +162,7 @@ void dijkstra(Graph* graph, int vert_start, int vert_end)
     {
         if (path[i] == vert_start || path[i] == vert_end)
             frst_check++;
-        if (vist_nodes[i + 1].distance >= INT_MAX &&
-            vist_nodes[i + 1].distance != INT_MAX)
+        if (vist_nodes[i + 1]->dist >= INT_MAX && vist_nodes[i + 1]->dist != INT_MAX)
             sec_check++;
     }
 
@@ -172,7 +171,7 @@ void dijkstra(Graph* graph, int vert_start, int vert_end)
         printf("no path");
         return 0;
     }
-    else if (vist_nodes[path_len - 1].distance > INT_MAX && sec_check > 2)
+    else if (vist_nodes[path_len - 1]->dist > INT_MAX && sec_check > 2)
     {
         printf("overflow");
         return 0;
@@ -238,7 +237,7 @@ int main()
         return 0;
     }
 
-    dijkstra(graph, start, end);
+    dejkstra(graph, start, end);
 
     return 0;
 }
