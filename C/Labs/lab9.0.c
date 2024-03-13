@@ -13,7 +13,7 @@ typedef struct node
 typedef struct graph
 {
     int numb_vert;
-    Node** adjlist;
+    Node** list;
 } Graph;
 
 
@@ -29,10 +29,10 @@ Graph* make_graph(int vert)
 {
     Graph* graph = (Graph*)malloc(sizeof(Graph));
     graph->numb_vert = vert;
-    graph->adjlist = (Node**)malloc(vert * sizeof(Node*));
+    graph->list = (Node**)malloc(vert * sizeof(Node*));
 
     for (int i = 0; i < vert; i++)
-        graph->adjlist[i] = NULL;
+        graph->list[i] = NULL;
 
     return graph;
 }
@@ -52,12 +52,12 @@ Node* make_node(int vertex, int weight)
 void add_edge(Graph* graph, int start, int end, int weight)
 {
     Node* new_node = make_node(end, weight);
-    new_node->next = graph->adjlist[start - 1];
-    graph->adjlist[start - 1] = new_node;
+    new_node->next = graph->list[start - 1];
+    graph->list[start - 1] = new_node;
 
     new_node = make_node(start, weight);
-    new_node->next = graph->adjlist[end - 1];
-    graph->adjlist[end - 1] = new_node;
+    new_node->next = graph->list[end - 1];
+    graph->list[end - 1] = new_node;
 }
 
 
@@ -112,7 +112,7 @@ void dejkstra(Graph* graph, int vert_start, int vert_end)
 
         vist_nodes[min_edge].proc = 1;
 
-        Node* temp = graph->adjlist[min_edge];
+        Node* temp = graph->list[min_edge];
 
         while (temp)
         {
