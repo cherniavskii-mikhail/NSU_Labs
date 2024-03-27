@@ -51,7 +51,6 @@ void make_skeleton(Graph* graph, Graph* skl_graph, int numb_edges, int i_cnt, in
 			{
 				min_len = graph->adj_list[i]->edge_len;
 				i_cnt = i + 1;
-
 			}
 
 	skl_graph->adj_list[i_cnt] = graph->adj_list[i_cnt];
@@ -62,7 +61,7 @@ void make_skeleton(Graph* graph, Graph* skl_graph, int numb_edges, int i_cnt, in
 		if (graph->adj_list[i_cnt]->visited == false)
 			make_skeleton(graph, skl_graph, numb_edges, i_cnt, min_len);
 
-	return graph;
+	return skl_graph;
 }
 
 void Kraskal(Graph* graph, int numb_edges, int numb_vert)
