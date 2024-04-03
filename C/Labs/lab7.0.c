@@ -45,7 +45,7 @@ int top_sort(Graph* graph, int* result)
 			{
 				graph->input_edge[i]--;
 				if (graph->input_edge[i] == 0)
-					queue[ind_i++] = i;
+					queue[++ind_i] = i;
 			}
 		}
 	}
