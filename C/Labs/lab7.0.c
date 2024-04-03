@@ -45,7 +45,7 @@ int top_sort(Graph* graph, int* result)
 			{
 				graph->input_edge[i]--;
 				if (graph->input_edge[i] == 0)
-					queue[++ind_i] = i;
+					queue[ind_i++] = i;
 			}
 		}
 	}
@@ -102,6 +102,12 @@ int main()
 			return 0;
 		}
 	}
+	int* res = (int*)malloc(numb_vert * sizeof(int));
 
+	if (topological_sort(&graph, res) == 0)
+		for (int i = 0; i < numb_vert; i++)
+			printf("%d ", res[i] + 1);
+	else
+		puts("impossible to sort");
 	return 0;
 }
