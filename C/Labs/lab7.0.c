@@ -20,7 +20,6 @@ Graph* make_graph(int numb_vert)
 	graph->adj_list = (Graph**)malloc(numb_vert * sizeof(Graph*));
 	graph->input_edge = (int**)malloc(numb_vert * sizeof(int*));
 
-
 	for (int i = 0; i < numb_vert; i++)
 		graph->adj_list[i] = NULL;
 
