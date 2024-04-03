@@ -41,7 +41,7 @@ int top_sort(Graph* graph, int* res)
 
 		for (int i = 0; i < graph->numb_vert; i++)
 		{
-			if (graph->numb_vert[node * graph->numb_vert + i] == 1)
+			if (graph->adj_list[node * graph->numb_vert + i] == 1)
 			{
 				graph->input_edge[i]--;
 				if (graph->input_edge[i] == 0)
