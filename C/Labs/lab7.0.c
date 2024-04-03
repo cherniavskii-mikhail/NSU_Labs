@@ -18,7 +18,6 @@ Graph* make_graph(int numb_vert)
 	Graph* graph = (Graph*)malloc(sizeof(Graph));
 	graph->numb_vert = numb_vert;
 	graph->adj_list = (Graph**)malloc(numb_vert * sizeof(Graph*));
-	graph->input_edge = (int**)malloc(numb_vert * sizeof(int*));
 
 	for (int i = 0; i < numb_vert; i++)
 		graph->adj_list[i] = NULL;
@@ -26,7 +25,7 @@ Graph* make_graph(int numb_vert)
 	return graph;
 }
 
-int top_sort(Graph* graph, int* result)
+int top_sort(Graph* graph, int* res)
 {
 	int front = 0, node, ind_i = -1, res_ind = 0;
 	int* queue = (int*)malloc(graph->numb_vert * sizeof(int));
@@ -38,7 +37,7 @@ int top_sort(Graph* graph, int* result)
 	while (front <= ind_i)
 	{
 		node = queue[front++];
-		result[res_ind++] = node;
+		res[res_ind++] = node;
 
 		for (int i = 0; i < graph->numb_vert; i++)
 		{
@@ -46,7 +45,7 @@ int top_sort(Graph* graph, int* result)
 			{
 				graph->input_edge[i]--;
 				if (graph->input_edge[i] == 0)
-					queue[++ind_i] = i;
+					queue[ind_i++] = i;
 			}
 		}
 	}
