@@ -7,44 +7,55 @@ typedef struct Graph
 {
 	int vert_numb;
 	int edge_numb;
-	int* adj_list;
-	int* inv_list;
+	char* adj_list;
+	char* inv_list;
 	int* visited;
 } Graph;
 
-typedef struct Stack {
+typedef struct Stack 
+{
 	int value;
 	struct Stack* next;
 }Stack;
 
-Stack* create_stack() {
-	Stack* elem = (Stack*)malloc(sizeof(Stack));
-	elem->next = NULL;
+Stack* create_stack() 
+{
+	Stack* stack = (Stack*)malloc(sizeof(Stack));
+	stack->next = NULL;
 
-	return elem;
+	return stack;
 }
 
-void push(Stack* stack, int value) {
-	Stack* elem = (Stack*)malloc(sizeof(Stack));
-	elem->value = value;
-	elem->next = stack->next;
-	stack->next = elem;
+void push(Stack* stack, int value) 
+{
+	Stack* new_stack = (Stack*)malloc(sizeof(Stack));
+
+	new_stack->value = value;
+	new_stack->next = stack->next;
+	stack->next = new_stack;
 }
 
-int isEmpty(Stack* stack) {
+int isEmpty(Stack* stack) 
+{
 	return stack->next == NULL;
 }
 
-int pop(Stack* stack) {
+int pop(Stack* stack) 
+{
 	if (isEmpty(stack))
 		return -1;
-	Stack* first = stack->next;
-	int val = first->value;
-	stack->next = first->next;
-	free(first);
+
+	Stack* next_stack = stack->next;
+
+	int val = next_stack->value;
+	stack->next = next_stack->next;
+
+	free(next_stack);
+
 	return val;
 }
-void dfs(Graph* graph, int index, Stack* Stack) {
+void dfs(Graph* graph, int index, Stack* Stack) 
+{
 	graph->visited[index] = 1;
 
 	for (int i = 0; i < graph->vert_numb; ++i)
@@ -54,29 +65,18 @@ void dfs(Graph* graph, int index, Stack* Stack) {
 	push(Stack, index);
 }
 
-void paint_dfs(Graph* graph, int node, int colour) {
-	graph->visited[node] = colour;
+void paint_dfs(Graph* graph, int vertex, int colour) 
+{
+	graph->visited[vertex] = colour;
+
 	for (int i = 0; i < graph->vert_numb; ++i)
-		if (graph->inv_list[node * graph->vert_numb + i] && !graph->visited[i])
+		if (graph->inv_list[vertex * graph->vert_numb + i] && !graph->visited[i])
 			paint_dfs(graph, i, colour);
-}
-
-void print_res(Graph* graph) {
-	int maxComp = max(graph->visited, graph->vert_numb);
-
-	for (int i = 1; i < maxComp + 1; i++) {
-		printf("COMPONENT %d\n", i);
-		for (int j = 0; j < graph->vert_numb; j++)
-			if (graph->visited[j] == i)
-				printf("%d ", j + 1);
-
-		puts("");
-	}
 }
 
 void kosorajo(Graph* graph)
 {
-	int node;
+	int vertex;
 	int colour = 0;
 	Stack* Stack = create_stack();
 
@@ -88,19 +88,30 @@ void kosorajo(Graph* graph)
 		graph->visited[i] = 0;
 
 	while (!isEmpty(Stack)) {
-		node = pop(Stack);
-		if (!graph->visited[node])
-			paint_dfs(graph, node, ++colour);
+		vertex = pop(Stack);
+
+		if (!graph->visited[vertex])
+			paint_dfs(graph, vertex, ++colour);
 	}
 
-	print_res(graph);
+	int max_comp = max(graph->visited, graph->vert_numb);
+
+	for (int i = 1; i < max_comp + 1; i++) {
+		printf("COMPONENT %d\n", i);
+
+		for (int j = 0; j < graph->vert_numb; j++)
+			if (graph->visited[j] == i)
+				printf("%d ", j + 1);
+
+		puts("");
+	}
+
 	free(Stack);
 }
 
 int main()
 {
 	int numb_vert = 0, numb_edges = 0;
-
 	Graph* graph;
 
 	scanf_s("%d", &numb_vert);
@@ -119,6 +130,5 @@ int main()
 	}
 
 	kosorajo(graph);
-	
 	return 0;
 }
