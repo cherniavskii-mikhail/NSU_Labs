@@ -115,8 +115,8 @@ void kosorajo(Graph* graph)
        		printf("%d\n", i);
 		
         	for(int j = 0 ;j < graph->nodeCnt; j++)
-            	if(graph->visited[j] == i)
-                printf("%d ", j+1);
+            		if(graph->visited[j] == i)
+             	       		printf("%d ", j+1);
         	puts("");
     }
 	free(Stack);
