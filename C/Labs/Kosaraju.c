@@ -22,8 +22,8 @@ Graph* make_graph(int numb_vert)
 {
 	Graph* graph = (Graph*)malloc(sizeof(Graph));
 	graph->vert_numb = numb_vert;
-	graph->adj_list = (Graph**)malloc(numb_vert * sizeof(Graph*));
-	graph->inv_list = (Graph**)malloc(numb_vert * sizeof(Graph*));
+	graph->adj_list = (Graph*)malloc(numb_vert * sizeof(Graph));
+	graph->inv_list = (Graph*)malloc(numb_vert * sizeof(Graph));
 
 	for (int i = 0; i < numb_vert; i++) {
 		graph->adj_list[i] = NULL;
@@ -112,7 +112,7 @@ void kosorajo(Graph* graph)
 	int max_comp = max(graph->visited, graph->vert_numb);
 
 	for (int i = 1; i < maxComp+1; i++) {
-       		printf("COMPONENT %d\n", i);
+       		printf("%d\n", i);
 		
         	for(int j = 0 ;j < graph->nodeCnt; j++)
             	if(graph->visited[j] == i)
