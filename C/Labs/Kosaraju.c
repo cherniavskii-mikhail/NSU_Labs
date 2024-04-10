@@ -7,8 +7,8 @@ typedef struct Graph
 {
 	int vert_numb;
 	int edge_numb;
-	char* adj_list;
-	char* inv_list;
+	int* adj_list;
+	int* inv_list;
 	int* visited;
 } Graph;
 
