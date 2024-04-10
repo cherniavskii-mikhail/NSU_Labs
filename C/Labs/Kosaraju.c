@@ -7,8 +7,8 @@ typedef struct Graph
 {
 	int vert_numb;
 	int edge_numb;
-	char* adj_list;
-	char* inv_list;
+	int* adj_list;
+	int* inv_list;
 	int* visited;
 } Graph;
 
@@ -17,6 +17,20 @@ typedef struct Stack
 	int value;
 	struct Stack* next;
 }Stack;
+
+Graph* make_graph(int numb_vert)
+{
+	Graph* graph = (Graph*)malloc(sizeof(Graph));
+	graph->vert_numb = numb_vert;
+	graph->adj_list = (Graph**)malloc(numb_vert * sizeof(Graph*));
+	graph->inv_list = (Graph**)malloc(numb_vert * sizeof(Graph*));
+
+	for (int i = 0; i < numb_vert; i++) {
+		graph->adj_list[i] = NULL;
+		graph->inv_list[i] = NULL;
+	}
+	return graph;
+}
 
 Stack* create_stack() 
 {
@@ -54,6 +68,7 @@ int pop(Stack* stack)
 
 	return val;
 }
+
 void dfs(Graph* graph, int index, Stack* Stack) 
 {
 	graph->visited[index] = 1;
@@ -96,22 +111,21 @@ void kosorajo(Graph* graph)
 
 	int max_comp = max(graph->visited, graph->vert_numb);
 
-	for (int i = 1; i < max_comp + 1; i++) {
-		printf("COMPONENT %d\n", i);
-
-		for (int j = 0; j < graph->vert_numb; j++)
-			if (graph->visited[j] == i)
-				printf("%d ", j + 1);
-
-		puts("");
-	}
-
+	for (int i = 1; i < maxComp+1; i++) {
+       		printf("COMPONENT %d\n", i);
+		
+        	for(int j = 0 ;j < graph->nodeCnt; j++)
+            	if(graph->visited[j] == i)
+                printf("%d ", j+1);
+        	puts("");
+    }
 	free(Stack);
 }
 
 int main()
 {
 	int numb_vert = 0, numb_edges = 0;
+
 	Graph* graph;
 
 	scanf_s("%d", &numb_vert);
@@ -130,5 +144,6 @@ int main()
 	}
 
 	kosorajo(graph);
+	
 	return 0;
 }
