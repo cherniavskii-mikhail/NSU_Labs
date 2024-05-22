@@ -38,8 +38,8 @@ typedef enum error {
 Bit_stream *create_stream(FILE *file) {
     Bit_stream *stream = malloc(sizeof(Bit_stream));
     if (!stream) {
-        perror("Memory allocation failed");
-        exit(EXIT_FAILURE);
+        printf("Memory allocation failed");
+        return 0;
     }
     stream->file = file;
     stream->data = 0;
@@ -233,7 +233,7 @@ void code(FILE *fin, FILE *fout) {
     Prior_queue *queue = init_queue(fin);
 
     Bit_stream *stream = create_stream(fout);
-    
+
     Huffman_tree *codes = malloc(queue->size * sizeof(Huffman_tree));
     Node *root = create_tree(queue);
 
@@ -326,6 +326,7 @@ int main(int argc, char *argv[]) {
         decode(fin, fout);
 
     fclose(fin);
-    fclose(fout);    
+    fclose(fout);
     return 0;
+
 }
